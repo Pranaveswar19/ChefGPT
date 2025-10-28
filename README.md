@@ -26,10 +26,6 @@ An AI-powered mobile app that generates creative recipes from ingredients you ha
 - **Environment Variables**: flutter_dotenv
 - **UI Fonts**: Google Fonts (Poppins)
 
-## 📱 Screenshots
-
-> Add app screenshots here after testing
-
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -140,16 +136,6 @@ flutter build ios --release  # iOS
 - API responses may vary in quality depending on ingredient combinations
 - No image generation for recipes (potential future feature)
 
-## 🔮 Future Enhancements
-
-- [ ] Add recipe images using DALL-E or Stable Diffusion
-- [ ] Persist saved recipes using SQLite or Firebase
-- [ ] Share recipes with friends
-- [ ] Add cooking timer functionality
-- [ ] Support for ingredient substitutions
-- [ ] Meal planning features
-- [ ] Shopping list generation
-
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
@@ -157,12 +143,6 @@ This project is open source and available under the [MIT License](LICENSE).
 ## 👨‍💻 Author
 
 Built as part of an AI Vibe Coding Sprint to demonstrate rapid mobile app development using AI assistance.
-
-## 🙏 Acknowledgments
-
-- OpenAI for providing the GPT API
-- Flutter team for the amazing framework
-- Google Fonts for beautiful typography
 
 ---
 
