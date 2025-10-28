@@ -1,5 +1,3 @@
-## Getting Started
-
 # ChefGPT - AI Recipe Generator 🍳
 
 An AI-powered mobile app that generates creative recipes from ingredients you have at home. Built with Flutter and OpenAI's GPT API.
