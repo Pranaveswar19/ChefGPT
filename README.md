@@ -124,19 +124,15 @@ flutter build apk --release  # Android
 flutter build ios --release  # iOS
 ```
 
-## 🐛 Known Issues
+## 👨‍💻 Author
 
-- Recipes are not persisted between app restarts (using in-memory storage)
-- API responses may vary in quality depending on ingredient combinations
-- No image generation for recipes (potential future feature)
+**Mulaveesala Pranaveswar**
+- GitHub: [@Pranaveswar19](https://github.com/Pranaveswar19)
+
 
 ## 📄 License
 
-This project is open source and available under the [MIT License](LICENSE).
-
-## 👨‍💻 Author
-
-Built as part of an AI Vibe Coding Sprint to demonstrate rapid mobile app development using AI assistance.
+MIT License - see [LICENSE](LICENSE) file for details
 
 ---
 
