@@ -1,7 +1,3 @@
-# chefgpt_ai_recipe
-
-A new Flutter project.
-
 ## Getting Started
 
 # ChefGPT - AI Recipe Generator 🍳
