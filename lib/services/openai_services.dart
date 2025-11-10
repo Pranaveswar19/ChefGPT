@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:html' as html show window;
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -15,9 +16,20 @@ class OpenAIService extends ChangeNotifier {
   List<Recipe> get savedRecipes => _savedRecipes;
 
   String? _getApiKey() {
+    if (kIsWeb) {
+      try {
+        final env = html.window.localStorage['OPENAI_API_KEY'];
+        if (env != null && env.isNotEmpty) {
+          return env;
+        }
+      } catch (e) {
+        if (kDebugMode) print('Could not read from localStorage: $e');
+      }
+    }
+    
     String? apiKey = dotenv.env['OPENAI_API_KEY'];
-    if (apiKey == null || apiKey.isEmpty) {
-      apiKey = const String.fromEnvironment('OPENAI_API_KEY');
+    if (kDebugMode && apiKey != null) {
+      print('API Key loaded: ${apiKey.substring(0, 10)}...');
     }
     return (apiKey != null && apiKey.isNotEmpty) ? apiKey : null;
   }
@@ -30,7 +42,7 @@ class OpenAIService extends ChangeNotifier {
 
     final apiKey = _getApiKey();
     if (apiKey == null) {
-      _error = 'API key not found. Please add OPENAI_API_KEY to environment variables';
+      _error = 'API key not configured. Please add your OpenAI API key.';
       _isLoading = false;
       notifyListeners();
       return null;
@@ -39,6 +51,10 @@ class OpenAIService extends ChangeNotifier {
     final prompt = _buildPrompt(ingredients, dietaryPreference, cuisineType);
 
     try {
+      if (kDebugMode) {
+        print('Sending request to OpenAI...');
+      }
+      
       final response = await http.post(
         Uri.parse(_baseUrl),
         headers: {
@@ -55,10 +71,14 @@ class OpenAIService extends ChangeNotifier {
             },
             {'role': 'user', 'content': prompt}
           ],
-          'temperature': 0.8,
-          'max_tokens': 1500,
+          'temperature': 0.7,
+          'max_tokens': 1000,
         }),
-      );
+      ).timeout(const Duration(seconds: 30));
+
+      if (kDebugMode) {
+        print('Response status: ${response.statusCode}');
+      }
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -70,13 +90,16 @@ class OpenAIService extends ChangeNotifier {
         notifyListeners();
         return recipe;
       } else {
-        _error = 'Error: ${response.statusCode} - ${response.body}';
+        _error = 'API Error ${response.statusCode}: ${response.body.substring(0, 100)}';
         _isLoading = false;
         notifyListeners();
         return null;
       }
     } catch (e) {
       _error = 'Failed to generate recipe: $e';
+      if (kDebugMode) {
+        print('Error generating recipe: $e');
+      }
       _isLoading = false;
       notifyListeners();
       return null;
