@@ -1,7 +1,7 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'screens/home_screen.dart';
 import 'services/openai_services.dart';
 
@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
             seedColor: Colors.deepOrange,
             brightness: Brightness.light,
           ),
-          textTheme: GoogleFonts.poppinsTextTheme(),
+          textTheme: kIsWeb ? const TextTheme() : null,
+          fontFamily: kIsWeb ? null : 'Poppins',
           useMaterial3: true,
         ),
         home: const HomeScreen(),
