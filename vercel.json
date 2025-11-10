@@ -1,5 +1,3 @@
 {
-  "buildCommand": "bash build.sh",
-  "outputDirectory": "build/web",
-  "framework": null
+  "outputDirectory": "build/web"
 }
