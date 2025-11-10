@@ -20,9 +20,10 @@ class OpenAIService extends ChangeNotifier {
     _error = null;
     notifyListeners();
 
-    final apiKey = dotenv.env['OPENAI_API_KEY'];
-    if (apiKey == null || apiKey.isEmpty) {
-      _error = 'API key not found. Please add it to .env file';
+    final apiKey = dotenv.env['OPENAI_API_KEY'] ?? 
+                    const String.fromEnvironment('OPENAI_API_KEY');
+    if (apiKey.isEmpty) {
+      _error = 'API key not found. Please add it to .env file or environment';
       _isLoading = false;
       notifyListeners();
       return null;
