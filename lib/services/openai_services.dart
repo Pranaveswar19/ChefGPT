@@ -14,16 +14,23 @@ class OpenAIService extends ChangeNotifier {
   String? get error => _error;
   List<Recipe> get savedRecipes => _savedRecipes;
 
+  String? _getApiKey() {
+    String? apiKey = dotenv.env['OPENAI_API_KEY'];
+    if (apiKey == null || apiKey.isEmpty) {
+      apiKey = const String.fromEnvironment('OPENAI_API_KEY');
+    }
+    return (apiKey != null && apiKey.isNotEmpty) ? apiKey : null;
+  }
+
   Future<Recipe?> generateRecipe(List<String> ingredients,
       {String? dietaryPreference, String? cuisineType}) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
 
-    final apiKey = dotenv.env['OPENAI_API_KEY'] ?? 
-                    const String.fromEnvironment('OPENAI_API_KEY');
-    if (apiKey.isEmpty) {
-      _error = 'API key not found. Please add it to .env file or environment';
+    final apiKey = _getApiKey();
+    if (apiKey == null) {
+      _error = 'API key not found. Please add OPENAI_API_KEY to environment variables';
       _isLoading = false;
       notifyListeners();
       return null;
